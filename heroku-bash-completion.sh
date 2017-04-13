@@ -32,6 +32,11 @@ function _heroku_completion() {
             COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
             return 0
             ;;
+        apps:create)
+            opts="--remote --region --buildpack"
+            COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
+            return 0
+            ;;
         apps|apps:*)
             opts="-A --all -o --org -p --personal -s --space --json"
             COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
