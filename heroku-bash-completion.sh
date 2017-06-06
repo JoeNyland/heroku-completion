@@ -4,12 +4,13 @@
 
 function _heroku_completion() {
 
-    local cur prev opts
+    local cur prev opts commands
 
     COMPREPLY=()
 
     cur="${COMP_WORDS[COMP_CWORD]}"
     prev="${COMP_WORDS[COMP_CWORD-1]}"
+    commands="2fa:disable 2fa:generate-recovery-codes access access:add access:remove access:update addons addons:add addons:attach addons:create addons:destroy addons:detach addons:docs addons:downgrade addons:info addons:open addons:plans addons:remove addons:rename addons:services addons:upgrade addons:wait apps apps:create apps:delete apps:destroy apps:errors apps:favorites apps:favorites:add apps:favorites:remove apps:fork apps:info apps:join apps:list apps:lock apps:open apps:rename apps:stacks apps:stacks:set apps:transfer auth:2fa auth:2fa:disable auth:2fa:generate auth:login auth:logout auth:token auth:whoami authorizations authorizations:create authorizations:info authorizations:revoke authorizations:update buildpacks buildpacks:add buildpacks:clear buildpacks:remove buildpacks:set certs certs:add certs:auto certs:auto:disable certs:auto:enable certs:auto:refresh certs:chain certs:generate certs:info certs:key certs:remove certs:rollback certs:update ci ci:config ci:config:get ci:config:set ci:config:unset ci:debug ci:info ci:last ci:list ci:migrate-manifest ci:open ci:rerun ci:run clients clients:create clients:destroy clients:info clients:update config config:add config:get config:remove config:set config:unset container:login container:logout container:push domains domains:add domains:clear domains:remove domains:wait drains drains:add drains:get drains:remove drains:set dyno:copy dyno:exec dyno:forward dyno:kill dyno:resize dyno:restart dyno:scale dyno:socks dyno:stop dyno:type features features:disable features:enable features:info git git:clone git:remote keys keys:add keys:clear keys:remove labs labs:disable labs:enable labs:info local local:run local:start local:version logs maintenance maintenance:off maintenance:on members members:add members:remove members:set notifications orgs orgs:default orgs:open outbound-rules:add outbound-rules:remove pg pg:backups pg:backups:cancel pg:backups:capture pg:backups:delete pg:backups:download pg:backups:info pg:backups:public-url pg:backups:publicurl pg:backups:restore pg:backups:schedule pg:backups:schedules pg:backups:unschedule pg:backups:url pg:copy pg:credentials pg:credentials:create pg:credentials:destroy pg:credentials:repair-default pg:credentials:rotate pg:credentials:url pg:diagnose pg:info pg:kill pg:killall pg:links pg:links:create pg:links:destroy pg:maintenance pg:maintenance:run pg:maintenance:window pg:promote pg:ps pg:psql pg:pull pg:push pg:reset pg:unfollow pg:upgrade pg:wait pipelines pipelines:add pipelines:create pipelines:destroy pipelines:diff pipelines:info pipelines:list pipelines:open pipelines:promote pipelines:remove pipelines:rename pipelines:setup pipelines:update plugins plugins:install plugins:link plugins:uninstall plugins:update ps ps:copy ps:exec ps:forward ps:kill ps:resize ps:restart ps:scale ps:socks ps:stop ps:type redis redis:cli redis:credentials redis:info redis:maintenance redis:maxmemory redis:promote redis:timeout redis:wait regions releases releases:info releases:output releases:rollback run run:detached run:inside sessions sessions:destroy sharing:access sharing:add sharing:remove sharing:transfer spaces spaces:create spaces:destroy spaces:info spaces:peering:info spaces:peerings spaces:peerings:accept spaces:peerings:destroy spaces:ps spaces:rename spaces:topology spaces:vpn:config spaces:vpn:create spaces:vpn:destroy spaces:vpn:info spaces:vpn:wait spaces:wait stack:set status teams trusted-ips:add trusted-ips:remove twofactor:disable twofactor:generate-recovery-codes"
 
     case "${prev}" in
         --app|-a|--from)
@@ -168,13 +169,11 @@ function _heroku_completion() {
             return 0
             ;;
         heroku)
-            opts=$(heroku commands)
-            COMPREPLY=( $(compgen -W "${opts} help" -- ${cur}) )
+            COMPREPLY=( $(compgen -W "${commands} help" -- ${cur}) )
             return 0
             ;;
         help)
-            opts=$(heroku commands)
-            COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
+            COMPREPLY=( $(compgen -W "${commands}" -- ${cur}) )
             return 0
             ;;
         buildpacks|buildpacks:clear|certs|certs:*|config:set|config:unset|domains:clear|domains:remove|join|maintenance|maintenance:*|pg|pg:*|redis|redis:*)
